@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FauxBonk</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        background: linear-gradient(
+          180deg,
+          rgb(219, 219, 219) 0%,
+          rgb(255, 255, 255) 100%
+        );
+      }
+
+      h3 {
+        margin-bottom: 0;
+      }
+
+      p {
+        margin-top: 0;
+      }
+
+      .sidenav {
+        flex: 1;
+        height: 100%;
+        z-index: 1;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(
+          45deg,
+          rgba(34, 193, 195, 1) 0%,
+          rgba(253, 187, 45, 1) 100%
+        );
+        padding: 0 2%;
+        color: rgb(255, 255, 255);
+      }
+
+      .main-block {
+        flex: 4;
+        padding: 0 2%;
+      }
+
+      input,
+      textarea {
+        width: calc(100% - 18px);
+        padding: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #3b5998;
+        outline: none;
+      }
+
+      input::placeholder {
+        color: #666;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: #3b5998;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+      }
+
+      button:hover {
+        background: #2371a0;
+      }
+      #titre {
+        font-family: sans-serif;
+        font-size: 48px;
+        background: -webkit-linear-gradient(rgb(255, 0, 217), rgb(255, 162, 0));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+      }
+      .user {
+        cursor: pointer;
+      }
+      .delete {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mySidenav" class="sidenav">
+      <h1 onclick="getAllPublications()" id="titre">Fauxbonk Memers</h1>
+      <div id="users">
+        <p>Nom Prenom 1</p>
+        <p>Nom Prenom 2</p>
+        <p>Nom Prenom 3</p>
+        <p>Nom Prenom 4</p>
+      </div>
+    </div>
+
+    <div class="main-block">
+      <h1>Niwz Feed (*＾ω＾)人(＾ω＾*)</h1>
+
+      <div id="feed">
+        <h3>16-11-2022</h3>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae
+          explicabo quo soluta corrupti, dolores quasi architecto ducimus, eius
+          eaque reiciendis ullam doloribus, ratione saepe repellat omnis rem.
+          Cum, veniam alias.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      $.get("comptes.php", function (data) {
+        $("#users").html(data);
+      });
+
+      $.get("publications.php?id=", function (data) {
+        $("#feed").html(data);
+      });
+
+      function getPublications(id){
+        $.get('publications.php?id='+id, function (data){
+        $("#feed").html(data);
+        });
+      }
+
+      function getAllPublications(){
+        $.get("publications.php?id=", function (data) {
+        $("#feed").html(data);
+        });
+      }
+      //ce methode ajax permet de simplifier la function
+      function deleteUser(id){
+        $.ajax({
+            url: 'comptes.php?id='+id,
+            type : 'DELETE',
+            success: function(data){
+                alert(data);
+
+            }
+        })
+
+      }
+
+    </script>
+  </body>
+</html>
